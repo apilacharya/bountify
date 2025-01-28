@@ -1,5 +1,8 @@
+// Built-in Node.js imports first
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+
+// Third-party imports next, alphabetically sorted
 import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
