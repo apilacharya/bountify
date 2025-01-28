@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardFooter,
   CardTitle,
-  CardDescription,
   CardContent,
 } from "@/components/ui/card";
 import { Separator } from "@radix-ui/react-separator";
