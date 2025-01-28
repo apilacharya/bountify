@@ -6,7 +6,7 @@ type TicketPageProps = {
   };
 };
 
-const TicketPage = ({ params }: TicketPageProps) => {
+const TicketPage = async ({ params }: TicketPageProps) => {
   const ticket = initialTickets.find((ticket) => ticket.id === params.ticketId);
 
   if (!ticket) {
