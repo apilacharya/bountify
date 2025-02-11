@@ -21,14 +21,10 @@ const tickets = [
 ];
 
 const seed = async () => {
-  const t0 = performance.now();
-  console.log("DB SEED: STARTED...");
   await prisma.ticket.deleteMany({});
   await prisma.ticket.createMany({
     data: tickets as Ticket[],
   });
-  const t1 = performance.now();
-  console.log("DB SEED: FINISHED in " + (t1 - t0) + " milliseconds");
 };
 
 seed();
