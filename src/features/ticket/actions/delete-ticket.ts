@@ -1,6 +1,7 @@
 "use server";
 import { prisma } from "@/lib/prisma";
 import { ticketsPath } from "@/paths";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const deleteTicket = async (id: string) => {
@@ -8,5 +9,6 @@ export const deleteTicket = async (id: string) => {
     where: { id },
   });
 
+  revalidatePath(ticketsPath());
   redirect(ticketsPath());
 };
