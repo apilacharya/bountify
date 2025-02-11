@@ -1,22 +1,21 @@
-import { initialTickets } from "@/data";
+import { TicketItem } from "@/features/ticket/components/ticket-item";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
+import { Ticket } from "@prisma/client";
+import { notFound } from "next/navigation";
 
-type TicketPageProps = {
-  params: {
-    ticketId: string;
-  };
-};
+type TicketPageParams = Promise<{ ticketId: string }>;
 
-const TicketPage = async ({ params }: TicketPageProps) => {
-  const ticket = initialTickets.find((ticket) => ticket.id === params.ticketId);
+const TicketPage = async (props: { params: TicketPageParams }) => {
+  const { ticketId } = await props.params;
+  const ticket = await getTicket(ticketId);
 
   if (!ticket) {
-    return <div>Ticket not found</div>;
+    return notFound();
   }
 
   return (
-    <div>
-      <h2 className="text-lg"> {ticket.title}</h2>
-      <p className="text-sm">{ticket.content}</p>
+    <div className="flex justify-center animate-fade-in-from-top">
+      <TicketItem ticket={ticket as Ticket} isDetail />
     </div>
   );
 };
