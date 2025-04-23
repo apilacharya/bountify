@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { Ticket } from "@prisma/client";
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ type TicketMoreMenuProps = {
   trigger: React.ReactNode;
 };
 
-const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
+const TicketMoreMenu = ({  trigger }: TicketMoreMenuProps) => {
   const deleteButton = (
     <DropdownMenuItem>
       <LucideTrash className="mr-2 h-4 w-4" />
