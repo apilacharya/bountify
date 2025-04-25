@@ -1,5 +1,6 @@
-// import { Button } from "@/components/ui/button";
-import { Ticket } from "@prisma/client";
+"use client";
+
+import { Ticket, TicketStatus } from "@prisma/client";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -10,32 +11,69 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { LucideTrash } from "lucide-react";
+import { TICKET_STATUS_LABELS } from "../constants";
+import { updateTicketStatus } from "../actions/update-ticket";
+import { toast } from "sonner";
+import { useConfirmDialog } from "@/components/confirm-dialog";
+import { deleteTicket } from "../actions/delete-ticket";
 
 type TicketMoreMenuProps = {
   ticket: Ticket;
   trigger: React.ReactNode;
 };
 
-const TicketMoreMenu = ({  trigger }: TicketMoreMenuProps) => {
-  const deleteButton = (
-    <DropdownMenuItem>
-      <LucideTrash className="mr-2 h-4 w-4" />
-      <span>Delete</span>
-    </DropdownMenuItem>
+const TicketMoreMenu = ({ ticket, trigger }: TicketMoreMenuProps) => {
+  const [deleteButton, deleteDialog] = useConfirmDialog({
+    action: deleteTicket.bind(null, ticket.id),
+    trigger: (
+      <DropdownMenuItem>
+        <LucideTrash className="mr-2 h-4 w-4" />
+        <span>Delete</span>
+      </DropdownMenuItem>
+    ),
+  });
+
+  const handleUpdateTicketStatus = async (value: string) => {
+    // toast.loading('Updating status...')
+
+    const promise = updateTicketStatus(ticket.id, value as TicketStatus);
+    toast.promise(promise, {
+      loading: "Updating status...",
+    });
+
+    const result = await promise;
+    if (result.status === "ERROR") {
+      toast.error(result.message);
+    } else if (result.status === "SUCCESS") {
+      toast.success(result.message);
+    }
+  };
+
+  const ticketStatusRadioGroupItem = (
+    <DropdownMenuRadioGroup
+      value={ticket.status}
+      onValueChange={handleUpdateTicketStatus}
+    >
+      {(Object.keys(TICKET_STATUS_LABELS) as Array<TicketStatus>).map((key) => (
+        <DropdownMenuRadioItem key={key} value={key}>
+          {TICKET_STATUS_LABELS[key]}
+        </DropdownMenuRadioItem>
+      ))}
+    </DropdownMenuRadioGroup>
   );
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="w-56">
-        <DropdownMenuRadioGroup>
-          <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
-        </DropdownMenuRadioGroup>
-        <DropdownMenuSeparator />
-        {deleteButton}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {deleteDialog}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+        <DropdownMenuContent side="right" className="w-56">
+          {ticketStatusRadioGroupItem}
+          <DropdownMenuSeparator />
+          {deleteButton}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
 

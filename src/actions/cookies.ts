@@ -10,7 +10,7 @@ export const getCookieByKey = async (key: string) => {
   return cookie.value;
 };
 
-export const setCokkieByKey = async (key: string, value: string) => {
+export const setCookieByKey = async (key: string, value: string) => {
   (await cookies()).set(key, value);
 };
 

@@ -11,7 +11,7 @@ import {
   toActionState,
 } from "@/components/form/utils/to-action-state";
 import { z } from "zod";
-import { setCokkieByKey } from "@/actions/cookies";
+import { setCookieByKey } from "@/actions/cookies";
 
 const upsertTicketSchema = z.object({
   title: z.string().min(1).max(191),
@@ -55,8 +55,9 @@ export const upsertTicket = async (
   //   here revalidating the ticketpath is not required because ticketPath is dynamically rendered by next by default
 
   if (id) {
-    await setCokkieByKey("toast", "Ticket updated");
+    await setCookieByKey("toast", "Ticket updated");
     redirect(ticketPath(id));
   }
+  await setCookieByKey("toast", "Ticket created successfully");
   return toActionState("SUCCESS", "Ticket created successfully");
 };
