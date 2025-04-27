@@ -27,7 +27,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  console.log("1. Layout rendering");
   return (
     <html lang="en">
       <body

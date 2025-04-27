@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function FieldError({ actionState, name }: Props) {
-  console.log(actionState, name)
+  console.log("actionState", actionState);
   const message = actionState.fieldErrors[name];
   if (!message) return null;
   return <span className="text-xs text-red-500">{message}</span>;

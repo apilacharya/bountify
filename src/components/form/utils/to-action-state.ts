@@ -20,7 +20,6 @@ export const formErrorToActionState = (
 ): ActionState => {
   if (error instanceof ZodError) {
     // if validation error with Zod, return first error message
-    console.log(error.flatten().fieldErrors);
     return {
       status: "ERROR",
       message: "",
@@ -55,6 +54,7 @@ export const toActionState = (
   status: ActionState["status"],
   message: string
 ): ActionState => {
+  
   return {
     status,
     message,
