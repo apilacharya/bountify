@@ -13,11 +13,11 @@ const TicketsPage = () => {
   return (
     <>
       <div className="flex-1 flex flex-col gap-y-8">
-        <Heading title="Tickets" description="All your tickets at one place" />
+        <Heading title="Bounty Tickets" description="List all your tickets at one place" />
 
         <CardCompact
-          title="Create Ticket"
-          description="A new ticket will be created"
+          title="Generate Ticket"
+          description="A new ticket for bounty will be created"
           className="w-full max-w-[420px] self-center"
           content={<TicketUpsertForm />}
         />

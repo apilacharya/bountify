@@ -7,7 +7,7 @@ type TicketPageParams = Promise<{ ticketId: string }>;
 
 const TicketPage = async (props: { params: TicketPageParams }) => {
   const { ticketId } = await props.params;
-  const ticket = await getTicket(ticketId);
+  const ticket = await t(ticketId);
 
   if (!ticket) {
     return notFound();

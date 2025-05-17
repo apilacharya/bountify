@@ -1,9 +1,11 @@
 //src/components/header/index.tsx
 import { homePath, ticketsPath, signInPath, signUpPath } from "@/paths";
 import { buttonVariants } from "@/components/ui/button";
-import { LucideKanban } from "lucide-react";
+import { LucideKanban, LucideLogOut } from "lucide-react";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
+import { SubmitButton } from "./form/submit-button";
+import { signOut } from "@/features/auth/actions/sign-out";
 
 const Header = () => {
   const navItems = (
@@ -28,6 +30,9 @@ const Header = () => {
       >
         Sign In
       </Link>
+      <form action={signOut}>
+        <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
+      </form>
     </>
   );
   return (
@@ -38,7 +43,7 @@ const Header = () => {
           className={buttonVariants({ variant: "ghost" })}
         >
           <LucideKanban />
-          <h1 className="ml-2 text-lg font-semibold">TicketBountry</h1>
+          <h1 className="ml-2 text-lg font-semibold">BountiFy</h1>
         </Link>
       </div>
       <div className="flex align-items-center gap-x-2">

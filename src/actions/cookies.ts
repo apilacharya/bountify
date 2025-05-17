@@ -1,5 +1,4 @@
-"use server";
-
+'use server'
 import { cookies } from "next/headers";
 
 export const getCookieByKey = async (key: string) => {

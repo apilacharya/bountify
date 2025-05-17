@@ -1,7 +1,7 @@
 "use server";
-import { ticketsPath } from "./../../paths";
+import { ticketsPath } from "../../../paths";
 
-import { ActionState } from "./../../components/form/utils/to-action-state";
+import { ActionState } from "../../../components/form/utils/to-action-state";
 
 import {
   formErrorToActionState,
@@ -13,6 +13,7 @@ import { prisma } from "@/lib/prisma";
 import { lucia } from "@/lib/lucia";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { Prisma } from "@prisma/client";
 
 const signUpSchema = z
   .object({
@@ -51,6 +52,7 @@ const signUpSchema = z
   });
 
 export const signUp = async (_actionState: ActionState, formData: FormData) => {
+  console.log(formData);
   try {
     const { username, email, password } = signUpSchema.parse(
       Object.fromEntries(formData)
@@ -69,13 +71,18 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     const session = await lucia.createSession(user.id, {});
     const sessionCookie = await lucia.createSessionCookie(session.id);
 
-    const cookieStore = await cookies();
-    cookieStore.set(
+    (await cookies()).set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes
     );
   } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      return formErrorToActionState(error, formData);
+    }
     return formErrorToActionState(error, formData);
   }
   redirect(ticketsPath());

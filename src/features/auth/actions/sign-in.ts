@@ -13,7 +13,19 @@ import { lucia } from "@/lib/lucia";
 import { cookies } from "next/headers";
 
 const signInSchema = z.object({
-  email: z.string().min(1, { message: "Is required" }).max(191).email(),
+  email: z
+    .string()
+    .min(1, { message: "Is required" })
+    .max(191, { message: "Too long" })
+    .refine(
+      (val) => {
+        if (val === "") return true; // skip email validation if blank
+        return z.string().email().safeParse(val).success;
+      },
+      {
+        message: "Invalid email",
+      }
+    ),
   password: z.string().min(6).max(191),
 });
 
@@ -28,13 +40,13 @@ export const signIn = async (_actionState: ActionState, formData: FormData) => {
     });
 
     if (!user) {
-      return toActionState("ERROR", "Incorrect email or password");
+      return toActionState("ERROR", "Incorrect email or password", formData);
     }
 
     const validPassword = await verify(user.passwordHash, password);
 
     if (!validPassword) {
-      return toActionState("ERROR", "Incorrect email or password");
+      return toActionState("ERROR", "Incorrect email or password", formData);
     }
 
     const session = await lucia.createSession(user.id, {});
