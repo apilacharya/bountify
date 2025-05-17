@@ -1,5 +1,5 @@
 import { TicketItem } from "@/features/ticket/components/ticket-item";
-import { getTicket } from "@/features/ticket/queries/get-ticket";
+// import { getTicket } from "@/features/ticket/queries/get-ticket";
 import { Ticket } from "@prisma/client";
 import { notFound } from "next/navigation";
 
