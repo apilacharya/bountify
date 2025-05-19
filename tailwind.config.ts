@@ -64,9 +64,32 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "accordion-down": {
+          from: {
+            height: "0px",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0px",
+          },
+        },
+        "header-from-top": {
+          from: { transform: "translateY(-100%)" },
+          to: { transform: "translateY(0)" },
+        },
       },
       animation: {
         "fade-in-from-top": "fade-in-from-top 0.5s ease-out",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "header-from-top": "header-from-top 0.5s ease-out",
       },
       borderRadius: {
         lg: "var(--radius)",

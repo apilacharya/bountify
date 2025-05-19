@@ -1,7 +1,10 @@
 "use server";
 import { ticketsPath } from "../../../paths";
 
-import { ActionState } from "../../../components/form/utils/to-action-state";
+import {
+  ActionState,
+  toActionState,
+} from "../../../components/form/utils/to-action-state";
 
 import {
   formErrorToActionState,
@@ -57,6 +60,27 @@ export const signUp = async (_actionState: ActionState, formData: FormData) => {
     const { username, email, password } = signUpSchema.parse(
       Object.fromEntries(formData)
     );
+
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [
+          {
+            username,
+          },
+          {
+            email,
+          },
+        ],
+      },
+    });
+
+    if (existingUser) {
+      if (existingUser.username === username) {
+        return toActionState("ERROR", "Username already taken", formData);
+      } else if (existingUser.email === email) {
+        return toActionState("ERROR", "Email already taken", formData);
+      }
+    }
 
     const passwordHash = await hash(password);
 
