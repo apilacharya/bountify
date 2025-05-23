@@ -5,7 +5,7 @@ import { getAuth } from "./get-auth";
 export const getAuthOrRedirect = async () => {
   const auth = await getAuth();
   if (!auth.user) {
-    redirect(signInPath());
+    return redirect(signInPath());
   }
 
   return auth;
