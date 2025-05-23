@@ -2,7 +2,7 @@
 
 import { toCent } from "./../../../utils/currency";
 import { prisma } from "@/lib/prisma";
-import {  ticketPath, ticketsPath } from "@/paths";
+import { ticketPath, ticketsPath } from "@/paths";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
@@ -27,21 +27,21 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
-  const { user } = await getAuthOrRedirect()
-  
+  const { user } = await getAuthOrRedirect();
+
   try {
-    if(!id) {
+    if (id) {
       const ticket = await prisma.ticket.findUnique({
         where: {
           id,
-        }
-      })
+        },
+      });
 
-      if(!ticket || !isOwner(user, ticket)) {
-        return toActionState("ERROR", "Not authorized")
+      if (!ticket || !isOwner(user, ticket)) {
+        return toActionState("ERROR", "Not authorized");
       }
     }
-     const data = upsertTicketSchema.parse({
+    const data = upsertTicketSchema.parse({
       title: formData.get("title"),
       content: formData.get("content"),
       deadline: formData.get("deadline"),
