@@ -7,29 +7,14 @@ import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { SubmitButton } from "./form/submit-button";
 import { signOut } from "@/features/auth/actions/sign-out";
-import { getAuth } from "@/features/auth/queries/get-auth";
-import { User as AuthUser } from "lucia";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useAuth } from "@/features/auth/hooks/use-auth";
 
 const Header = () => {
   //const { user } = await getAuth();  since this line of code is under header which is under root layout all the pages under the app route are dynamically rendered since getAuth uses cookies() api which is related with server behaviour
 
   // fixed the dynamic rendering issue by using useEffect and useState
   // this way the header will be rendered on the client side and the user will be fetched from the server
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [isFetched, setFetched] = useState(false);
-
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { user } = await getAuth();
-      setUser(user);
-      setFetched(true);
-    };
-    fetchUser();
-  }, [pathname]);
+  const { user, isFetched } = useAuth();
 
   if (!isFetched) {
     return null;

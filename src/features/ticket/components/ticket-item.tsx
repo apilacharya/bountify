@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { ticketEditPath, ticketPath } from "@/paths";
 import Link from "next/link";
-import { Ticket } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { TICKET_ICONS } from "../constants";
 import {
   LucideMoreVertical,
@@ -20,7 +20,12 @@ import { toCurrencyFromCent } from "@/utils/currency";
 import { TicketMoreMenu } from "./ticket-more-menu";
 
 type TicketItemProps = {
-  ticket: Ticket;
+  ticket: Prisma.TicketGetPayload<{
+    include: { user: {
+      select: { username: true };
+    } };
+  }>;
+
   isDetail?: boolean;
 };
 
@@ -40,8 +45,6 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
       </Link>
     </Button>
   );
-
-
 
   const moreMenu = (
     <TicketMoreMenu
@@ -78,7 +81,9 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
           </span>
         </CardContent>
         <CardFooter className="flex justify-between">
-          <p className="text-sm text-muted-foreground">{ticket.deadline}</p>
+          <p className="text-sm text-muted-foreground">
+            {ticket.deadline} by {ticket.user.username}
+          </p>
           <p className="text-sm text-muted-foreground">
             {toCurrencyFromCent(ticket.bounty)}
           </p>
@@ -87,7 +92,7 @@ const TicketItem = ({ ticket, isDetail }: TicketItemProps) => {
       <div className="flex flex-col gap-y-1">
         {isDetail ? (
           <>
-            {editButton}  {moreMenu}
+            {editButton} {moreMenu}
           </>
         ) : (
           <>
