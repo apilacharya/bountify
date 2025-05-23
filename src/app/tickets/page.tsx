@@ -5,7 +5,7 @@ import { Spinner } from "@/components/spinner";
 import { CardCompact } from "@/components/card-compact";
 import { TicketUpsertForm } from "@/features/ticket/components/ticket-upsert-form";
 import { getAuth } from "@/features/auth/queries/get-auth";
-import { notFound, redirect } from "next/navigation";
+import {  redirect } from "next/navigation";
 import { signInPath } from "@/paths";
 
 const TicketsPage = async () => {
