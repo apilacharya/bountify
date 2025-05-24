@@ -27,7 +27,7 @@ export const upsertTicket = async (
   _actionState: ActionState,
   formData: FormData
 ) => {
-  const { user } = await getAuthOrRedirect();
+  const user = await getAuthOrRedirect();
 
   try {
     if (id) {

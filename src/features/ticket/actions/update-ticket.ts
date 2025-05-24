@@ -12,7 +12,7 @@ import { TicketStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export const updateTicketStatus = async (id: string, status: TicketStatus) => {
-  const {user} = await getAuthOrRedirect()// simulate network delay
+  const user = await getAuthOrRedirect()// simulate network delay
 
   try {
     const ticket = await prisma.ticket.findUnique({

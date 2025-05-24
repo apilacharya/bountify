@@ -12,7 +12,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const deleteTicket = async (id: string) => {
-  const { user } = await getAuthOrRedirect(); // simulate network delay
+  const user = await getAuthOrRedirect(); // simulate network delay
 
   try {
     const ticket = await prisma.ticket.findUnique({
