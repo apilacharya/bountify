@@ -1,12 +1,12 @@
 // src/app/layout.tsx
-import { Header } from "@/components/header";
+import { Header } from "@/app/_navigation/header";
 import "./globals.css";
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ThemeProviderClient from "@/components/theme/theme-provider-client";
 import { Toaster } from "sonner";
-import { Sidebar } from "@/components/sidebar/components/sidebar";
+import { Sidebar } from "@/app/_navigation/sidebar/components/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
