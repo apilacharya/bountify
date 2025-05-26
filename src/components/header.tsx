@@ -2,12 +2,12 @@
 "use client";
 import { homePath, signInPath, signUpPath } from "@/paths";
 import { buttonVariants } from "@/components/ui/button";
-import { LucideKanban, LucideLogOut } from "lucide-react";
+import { LucideKanban } from "lucide-react";
 import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
-import { SubmitButton } from "./form/submit-button";
-import { signOut } from "@/features/auth/actions/sign-out";
+
 import { useAuth } from "@/features/auth/hooks/use-auth";
+import { AccountDropdown } from "./account-dropdwon";
 
 const Header = () => {
   //const { user } = await getAuth();  since this line of code is under header which is under root layout all the pages under the app route are dynamically rendered since getAuth uses cookies() api which is related with server behaviour
@@ -21,9 +21,7 @@ const Header = () => {
   }
 
   const navItems = user ? (
-    <form action={signOut}>
-      <SubmitButton label="Sign Out" icon={<LucideLogOut />} />
-    </form>
+    <AccountDropdown user={user} />
   ) : (
     <>
       <Link
