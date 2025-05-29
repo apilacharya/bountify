@@ -138,5 +138,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Next.js team for the amazing framework
 - Prisma team for the excellent ORM
-- Radix UI for accessible components
+- Shadcn UI for accessible components
 - All contributors and users of the project
