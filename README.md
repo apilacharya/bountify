@@ -1,36 +1,142 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BountiFy - Ticket Bounty Platform
+
+BountiFy is a modern web application built with Next.js and Prisma that allows users to create, manage, and track bounty tickets. It provides a platform for users to post tasks with bounties and track their progress.
+
+## Features
+
+- 🔐 **Authentication System**
+
+  - Secure user authentication with Lucia
+  - Protected routes for authenticated users
+  - User profile management
+
+- 🎫 **Ticket Management**
+
+  - Create and manage bounty tickets
+  - Set deadlines and bounty amounts
+  - Track ticket status (Open, In Progress, Done)
+  - Search functionality for tickets
+
+- 💰 **Bounty System**
+
+  - Set bounty amounts for tickets
+  - Track bounty status
+  - Currency handling in cents for precise amounts
+
+- 🎨 **Modern UI/UX**
+  - Responsive design
+  - Dark/Light theme support
+  - Smooth animations and transitions
+  - Intuitive navigation with breadcrumbs
+
+## Tech Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Database**: PostgreSQL with Prisma ORM
+- **Authentication**: Lucia
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI
+- **Icons**: Lucide Icons
+- **Form Handling**: React Server Actions
+- **State Management**: React Hooks
+- **Type Safety**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- PostgreSQL database
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/bountify.git
+cd bountify
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Set up environment variables:
 
-## Learn More
+```bash
+cp .env.example .env
+```
 
-To learn more about Next.js, take a look at the following resources:
+Fill in the required environment variables in `.env`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Set up the database:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm prisma generate
+pnpm prisma db push
+```
 
-## Deploy on Vercel
+5. Run the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application will be available at `http://localhost:3000`
+
+## Project Structure
+
+```
+src/
+├── app/                    # Next.js app router pages
+├── components/            # Reusable UI components
+├── features/             # Feature-based modules
+│   ├── auth/            # Authentication related code
+│   └── ticket/          # Ticket management
+├── lib/                 # Utility libraries and configurations
+└── utils/              # Helper functions
+```
+
+## Key Features Implementation
+
+### Authentication
+
+- Server-side authentication with Lucia
+- Protected routes using middleware
+- Session management with cookies
+
+### Ticket System
+
+- CRUD operations for tickets
+- Status management (Open, In Progress, Done)
+- Search functionality with debouncing
+- Bounty amount handling
+
+### UI/UX
+
+- Responsive sidebar navigation
+- Theme switching (dark/light mode)
+- Loading states and error handling
+- Form validation and error messages
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Next.js team for the amazing framework
+- Prisma team for the excellent ORM
+- Radix UI for accessible components
+- All contributors and users of the project
