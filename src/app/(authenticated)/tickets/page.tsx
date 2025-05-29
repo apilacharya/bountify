@@ -6,10 +6,11 @@ import { getAuth } from "@/features/auth/queries/get-auth";
 import { Spinner } from "@/components/spinner";
 import { TicketList } from "@/features/ticket/components/ticket-list";
 import { Suspense } from "react";
-import { SearchParams } from "@/features/ticket/search-params";
+import { SearchParams } from "nuqs/server";
+import { searchParamsCache } from "@/features/ticket/search-params";
 
 type TicketPageProps = {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 };
 
 const TicketsPage = async ({ searchParams }: TicketPageProps) => {
@@ -31,7 +32,12 @@ const TicketsPage = async ({ searchParams }: TicketPageProps) => {
         />
 
         <Suspense fallback={<Spinner />}>
-          <TicketList userId={user?.id} searchParams={searchParams} />
+          <TicketList
+            userId={user?.id}
+            searchParams={
+              searchParamsCache.parse(searchParams)
+            }
+          />
         </Suspense>
       </div>
     </>
