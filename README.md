@@ -35,7 +35,7 @@ BountiFy is a modern web application built with Next.js and Prisma that allows u
 - **Database**: PostgreSQL with Prisma ORM
 - **Authentication**: Lucia
 - **Styling**: Tailwind CSS
-- **UI Components**: Radix UI
+- **UI Components**: Shadcn UI
 - **Icons**: Lucide Icons
 - **Form Handling**: React Server Actions
 - **State Management**: React Hooks
